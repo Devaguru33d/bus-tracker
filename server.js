@@ -305,5 +305,5 @@ app.get('/health', (req, res) => {
 
 // Start server
 app.listen(PORT, '0.0.0.0', () => {
-  console.log(Bus tracker running on port ${PORT});
+  console.log(`Bus tracker running on port ${PORT}`);
 });
