@@ -1,0 +1,2562 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CIT Bus Tracker — Chennai Institute of Technology</title>
+    <style>
+        :root {
+            --primary: #1E40AF;
+            --primary-light: #EFF6FF;
+            --primary-mid: #BFDBFE;
+            --primary-dark: #1E3A8A;
+            --green: #059669;
+            --green-light: #ECFDF5;
+            --amber: #D97706;
+            --amber-light: #FFFBEB;
+            --red: #DC2626;
+            --red-light: #FEF2F2;
+            --orange: #EA580C;
+            --teal: #0891B2;
+            --bg: #F5F7FF;
+            --bg2: #EEF2FF;
+            --white: #FFFFFF;
+            --border: #DDE3F0;
+            --border2: #C7D2E8;
+            --text1: #0F172A;
+            --text2: #1E293B;
+            --text3: #475569;
+            --text4: #94A3B8;
+            --radius: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 22px;
+            --shadow-xs: 0 1px 2px rgba(15, 23, 42, .05);
+            --shadow-sm: 0 1px 4px rgba(15, 23, 42, .07), 0 1px 2px rgba(15, 23, 42, .04);
+            --shadow: 0 4px 16px rgba(15, 23, 42, .08), 0 1px 4px rgba(15, 23, 42, .04);
+            --shadow-md: 0 8px 28px rgba(15, 23, 42, .10), 0 2px 8px rgba(15, 23, 42, .05);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        html,
+        body {
+            height: 100%
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text1);
+            font-size: 15px;
+            -webkit-font-smoothing: antialiased
+        }
+
+        /* LOGIN */
+        #login-screen {
+            min-height: 100vh;
+            background: linear-gradient(150deg, #EFF6FF 0%, #E8EDFF 40%, #EDE9FE 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            flex-direction: column
+        }
+
+        .login-wrap {
+            width: 100%;
+            max-width: 420px
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 22px
+        }
+
+        .login-logo-ring {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #1E40AF, #3B82F6);
+            border-radius: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 14px;
+            box-shadow: 0 8px 28px rgba(30, 64, 175, .35)
+        }
+
+        .login-title {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--text1);
+            letter-spacing: -.5px;
+            line-height: 1.2
+        }
+
+        .login-college-name {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-top: 4px
+        }
+
+        .login-college-loc {
+            font-size: 12px;
+            color: var(--text3);
+            margin-top: 2px
+        }
+
+        .cit-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: #DBEAFE;
+            border: 1px solid #93C5FD;
+            border-radius: 20px;
+            padding: 4px 12px;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-top: 8px;
+            letter-spacing: .02em
+        }
+
+        .login-card {
+            background: var(--white);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-md);
+            padding: 28px;
+            border: 1px solid var(--border)
+        }
+
+        .role-tabs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3px;
+            background: var(--bg2);
+            border-radius: 10px;
+            padding: 3px;
+            margin-bottom: 22px
+        }
+
+        .role-tab {
+            padding: 9px;
+            text-align: center;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text3);
+            transition: all .2s;
+            border: none;
+            background: none
+        }
+
+        .role-tab.active {
+            background: var(--white);
+            color: var(--primary);
+            box-shadow: var(--shadow-sm);
+            font-weight: 700
+        }
+
+        .fg {
+            margin-bottom: 13px
+        }
+
+        .fg label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text2);
+            margin-bottom: 5px;
+            letter-spacing: .02em;
+            text-transform: uppercase
+        }
+
+        .fg input,
+        .fg select {
+            width: 100%;
+            padding: 11px 13px;
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius);
+            font-size: 14px;
+            outline: none;
+            transition: border .2s;
+            background: var(--bg);
+            color: var(--text1)
+        }
+
+        .fg input:focus,
+        .fg select:focus {
+            border-color: var(--primary);
+            background: var(--white);
+            box-shadow: 0 0 0 3px rgba(30, 64, 175, .08)
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 13px;
+            background: linear-gradient(135deg, #1E40AF, #2563EB);
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            font-size: 15px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all .2s;
+            box-shadow: 0 4px 14px rgba(30, 64, 175, .35)
+        }
+
+        .btn-login:hover {
+            transform: translateY(-1px)
+        }
+
+        .login-hint {
+            text-align: center;
+            margin-top: 12px;
+            font-size: 11px;
+            color: var(--text4)
+        }
+
+        .feat-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 7px;
+            margin-top: 16px
+        }
+
+        .feat-item {
+            background: rgba(255, 255, 255, .8);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 10px 8px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text2);
+            text-align: center;
+            line-height: 1.4
+        }
+
+        .feat-item span {
+            display: block;
+            font-size: 18px;
+            margin-bottom: 3px
+        }
+
+        /* APP SHELL */
+        #app-screen {
+            display: none;
+            min-height: 100vh
+        }
+
+        .topnav {
+            background: var(--white);
+            border-bottom: 1px solid var(--border);
+            padding: 0 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 56px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 1px 4px rgba(15, 23, 42, .06)
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 9px
+        }
+
+        .nav-icon {
+            width: 34px;
+            height: 34px;
+            background: linear-gradient(135deg, #1E40AF, #3B82F6);
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0
+        }
+
+        .nav-title {
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--text1);
+            letter-spacing: -.3px;
+            line-height: 1.2
+        }
+
+        .nav-sub {
+            font-size: 10px;
+            color: var(--text3);
+            font-weight: 500
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 6px
+        }
+
+        .nav-clock {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text2);
+            background: var(--bg2);
+            padding: 5px 9px;
+            border-radius: 8px;
+            border: 1px solid var(--border)
+        }
+
+        .nav-btn {
+            width: 34px;
+            height: 34px;
+            background: var(--bg2);
+            border-radius: 9px;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            flex-shrink: 0
+        }
+
+        .nav-notif-dot {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 7px;
+            height: 7px;
+            background: var(--red);
+            border-radius: 50%;
+            border: 1.5px solid white
+        }
+
+        .nav-avatar {
+            width: 34px;
+            height: 34px;
+            background: linear-gradient(135deg, #1E40AF, #3B82F6);
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 800;
+            color: white;
+            cursor: pointer;
+            flex-shrink: 0;
+            border: 1px solid var(--border)
+        }
+
+        /* BOTTOM NAV */
+        .bnav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--white);
+            border-top: 1px solid var(--border);
+            display: flex;
+            z-index: 100;
+            box-shadow: 0 -2px 10px rgba(15, 23, 42, .06)
+        }
+
+        .bnav-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 8px 0 10px;
+            cursor: pointer;
+            border: none;
+            background: none;
+            color: var(--text4);
+            font-size: 9.5px;
+            font-weight: 600;
+            gap: 3px;
+            transition: color .15s;
+            position: relative
+        }
+
+        .bnav-item svg {
+            width: 21px;
+            height: 21px;
+            stroke-width: 2
+        }
+
+        .bnav-item.active {
+            color: var(--primary)
+        }
+
+        .bnav-active-bar {
+            position: absolute;
+            top: 0;
+            left: 20%;
+            right: 20%;
+            height: 2.5px;
+            background: var(--primary);
+            border-radius: 0 0 3px 3px;
+            display: none
+        }
+
+        .bnav-item.active .bnav-active-bar {
+            display: block
+        }
+
+        .bnav-pip {
+            position: absolute;
+            top: 6px;
+            right: calc(50% - 13px);
+            width: 6px;
+            height: 6px;
+            background: var(--red);
+            border-radius: 50%;
+            border: 1.5px solid white;
+            display: none
+        }
+
+        /* PAGES */
+        .page {
+            display: none;
+            padding-bottom: 75px
+        }
+
+        .page.active {
+            display: block
+        }
+
+        .container {
+            max-width: 540px;
+            margin: 0 auto;
+            padding: 14px 13px 0
+        }
+
+        .page-hd {
+            max-width: 540px;
+            margin: 0 auto;
+            padding: 14px 13px 0
+        }
+
+        .page-title {
+            font-size: 21px;
+            font-weight: 800;
+            color: var(--text1);
+            letter-spacing: -.4px
+        }
+
+        .page-sub {
+            font-size: 13px;
+            color: var(--text3);
+            margin-top: 3px
+        }
+
+        /* CARDS */
+        .card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            padding: 15px;
+            margin-bottom: 11px;
+            border: 1px solid var(--border)
+        }
+
+        .card-hd {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px
+        }
+
+        .card-title {
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--text3);
+            text-transform: uppercase;
+            letter-spacing: .07em
+        }
+
+        /* BADGES */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 9px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            white-space: nowrap
+        }
+
+        .b-green {
+            background: #D1FAE5;
+            color: #065F46
+        }
+
+        .b-amber {
+            background: #FEF3C7;
+            color: #92400E
+        }
+
+        .b-red {
+            background: #FEE2E2;
+            color: #991B1B
+        }
+
+        .b-blue {
+            background: #DBEAFE;
+            color: #1E40AF
+        }
+
+        .b-purple {
+            background: #EDE9FE;
+            color: #5B21B6
+        }
+
+        .b-gray {
+            background: var(--bg2);
+            color: var(--text3)
+        }
+
+        .b-teal {
+            background: #CFFAFE;
+            color: #164E63
+        }
+
+        .b-orange {
+            background: #FFEDD5;
+            color: #9A3412
+        }
+
+        .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            flex-shrink: 0
+        }
+
+        .dot-g {
+            background: var(--green)
+        }
+
+        .dot-a {
+            background: var(--amber)
+        }
+
+        .dot-r {
+            background: var(--red)
+        }
+
+        /* HOME HERO */
+        .hero {
+            background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 55%, #E0E7FF 100%);
+            border-radius: var(--radius-lg);
+            padding: 17px;
+            margin-bottom: 11px;
+            border: 1px solid #BFDBFE;
+            position: relative;
+            overflow: hidden
+        }
+
+        .hero::before {
+            content: '🚌';
+            position: absolute;
+            right: 14px;
+            bottom: 8px;
+            font-size: 58px;
+            opacity: .10;
+            line-height: 1
+        }
+
+        .hero-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px
+        }
+
+        .hero-bus-num {
+            font-size: 32px;
+            font-weight: 900;
+            color: var(--primary);
+            letter-spacing: -1.5px;
+            line-height: 1
+        }
+
+        .hero-bus-label {
+            font-size: 12px;
+            color: var(--text3);
+            font-weight: 600;
+            margin-top: 2px
+        }
+
+        .hero-eta-wrap {
+            text-align: right
+        }
+
+        .hero-eta {
+            font-size: 30px;
+            font-weight: 900;
+            color: var(--text1);
+            letter-spacing: -1px
+        }
+
+        .hero-eta-lbl {
+            font-size: 11px;
+            color: var(--text3);
+            font-weight: 600;
+            margin-top: 1px
+        }
+
+        .hero-prog {
+            margin: 0 0 12px
+        }
+
+        .prog-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: var(--text3);
+            font-weight: 600;
+            margin-bottom: 6px
+        }
+
+        .prog-track {
+            height: 7px;
+            background: rgba(30, 64, 175, .12);
+            border-radius: 5px;
+            overflow: visible;
+            position: relative
+        }
+
+        .prog-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #1E40AF, #3B82F6);
+            border-radius: 5px;
+            transition: width 1.2s ease;
+            position: relative
+        }
+
+        .prog-bus-icon {
+            position: absolute;
+            right: -10px;
+            top: -7px;
+            font-size: 20px;
+            line-height: 1;
+            filter: drop-shadow(0 1px 2px rgba(0, 0, 0, .2))
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 8px
+        }
+
+        .hs {
+            background: rgba(255, 255, 255, .75);
+            border-radius: 10px;
+            padding: 9px;
+            text-align: center;
+            border: 1px solid rgba(191, 219, 254, .6)
+        }
+
+        .hs-val {
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--text1)
+        }
+
+        .hs-lbl {
+            font-size: 10px;
+            color: var(--text3);
+            font-weight: 600;
+            margin-top: 2px
+        }
+
+        /* QUICK ACTIONS */
+        .qa-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 9px;
+            margin-bottom: 11px
+        }
+
+        .qa {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 13px;
+            cursor: pointer;
+            transition: all .18s;
+            text-align: left
+        }
+
+        .qa:hover {
+            border-color: var(--primary);
+            box-shadow: var(--shadow);
+            transform: translateY(-1px)
+        }
+
+        .qa-ico {
+            width: 36px;
+            height: 36px;
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 7px;
+            font-size: 18px
+        }
+
+        .qa-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text1)
+        }
+
+        .qa-desc {
+            font-size: 11px;
+            color: var(--text3);
+            margin-top: 2px;
+            line-height: 1.4
+        }
+
+        /* BUS ROWS */
+        .bus-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--bg2)
+        }
+
+        .bus-row:last-child {
+            border-bottom: none
+        }
+
+        .bus-num-circle {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 16px;
+            flex-shrink: 0;
+            border: 2px solid transparent
+        }
+
+        .bus-info {
+            flex: 1;
+            min-width: 0
+        }
+
+        .bus-name {
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--text1);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis
+        }
+
+        .bus-sub {
+            font-size: 11px;
+            color: var(--text3);
+            margin-top: 1px
+        }
+
+        .bus-right {
+            text-align: right;
+            flex-shrink: 0
+        }
+
+        .bus-seats {
+            font-size: 10px;
+            color: var(--text4);
+            margin-top: 1px
+        }
+
+        /* WEATHER BAR */
+        .weather-bar {
+            background: linear-gradient(90deg, #FFFBEB, #FEF9C3);
+            border: 1px solid #FDE68A;
+            border-radius: var(--radius);
+            padding: 10px 13px;
+            margin-bottom: 11px;
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            font-size: 13px;
+            color: #92400E;
+            font-weight: 500
+        }
+
+        /* NOTICES */
+        .notice {
+            border-radius: var(--radius);
+            padding: 11px 13px;
+            margin-bottom: 11px;
+            display: flex;
+            align-items: flex-start;
+            gap: 9px;
+            font-size: 13px
+        }
+
+        .notice-warn {
+            background: #FFFBEB;
+            border: 1px solid #FDE68A;
+            color: #92400E
+        }
+
+        .notice-info {
+            background: var(--primary-light);
+            border: 1px solid var(--primary-mid);
+            color: var(--primary-dark)
+        }
+
+        .notice-success {
+            background: #ECFDF5;
+            border: 1px solid #A7F3D0;
+            color: #065F46
+        }
+
+        .notice-red {
+            background: #FEF2F2;
+            border: 1px solid #FECACA;
+            color: #991B1B
+        }
+
+        /* TIMELINE */
+        .tl-wrap {
+            padding: 2px 0
+        }
+
+        .tl-row {
+            display: flex;
+            gap: 13px;
+            padding-bottom: 18px
+        }
+
+        .tl-row:last-child {
+            padding-bottom: 0
+        }
+
+        .tl-spine {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 14px
+        }
+
+        .tl-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            border: 2px solid var(--border2);
+            background: var(--white);
+            margin-top: 1px
+        }
+
+        .tl-dot.done {
+            background: var(--primary);
+            border-color: var(--primary)
+        }
+
+        .tl-dot.curr {
+            background: var(--green);
+            border-color: var(--green);
+            box-shadow: 0 0 0 4px rgba(5, 150, 105, .15)
+        }
+
+        .tl-dot.up {
+            border-color: var(--border)
+        }
+
+        .tl-line {
+            flex: 1;
+            width: 2px;
+            background: var(--border);
+            margin-top: 4px
+        }
+
+        .tl-line.done {
+            background: var(--primary)
+        }
+
+        .tl-body {
+            flex: 1
+        }
+
+        .tl-time {
+            font-size: 11px;
+            color: var(--text4);
+            font-weight: 600;
+            margin-bottom: 2px
+        }
+
+        .tl-stop {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text1)
+        }
+
+        .tl-stop.done {
+            color: var(--text3);
+            font-weight: 500
+        }
+
+        .tl-stop.up {
+            color: var(--text4);
+            font-weight: 400
+        }
+
+        .tl-note {
+            font-size: 12px;
+            color: var(--text3);
+            margin-top: 3px
+        }
+
+        /* LIVE PILL */
+        .live-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: #ECFDF5;
+            border: 1px solid #A7F3D0;
+            border-radius: 20px;
+            padding: 3px 9px;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--green)
+        }
+
+        .l-ring {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--green);
+            position: relative;
+            flex-shrink: 0
+        }
+
+        .l-ring::before {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            border-radius: 50%;
+            background: rgba(5, 150, 105, .25);
+            animation: ping 1.4s ease infinite
+        }
+
+        @keyframes ping {
+            0% {
+                transform: scale(1);
+                opacity: .7
+            }
+
+            70%,
+            100% {
+                transform: scale(2);
+                opacity: 0
+            }
+        }
+
+        /* FORMS */
+        .fs {
+            margin-bottom: 13px
+        }
+
+        .fs label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text2);
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: .03em
+        }
+
+        .fs input,
+        .fs select,
+        .fs textarea {
+            width: 100%;
+            padding: 11px 13px;
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius);
+            font-size: 14px;
+            outline: none;
+            transition: all .2s;
+            background: var(--bg);
+            color: var(--text1)
+        }
+
+        .fs input:focus,
+        .fs select:focus,
+        .fs textarea:focus {
+            border-color: var(--primary);
+            background: var(--white);
+            box-shadow: 0 0 0 3px rgba(30, 64, 175, .08)
+        }
+
+        .fs textarea {
+            resize: none;
+            min-height: 68px;
+            line-height: 1.5
+        }
+
+        .f2col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 13px;
+            background: linear-gradient(135deg, #1E40AF, #2563EB);
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            font-size: 15px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all .2s;
+            box-shadow: 0 4px 14px rgba(30, 64, 175, .3)
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px)
+        }
+
+        .btn-danger {
+            width: 100%;
+            padding: 13px;
+            background: linear-gradient(135deg, #DC2626, #EF4444);
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            font-size: 15px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all .2s;
+            box-shadow: 0 4px 14px rgba(220, 38, 38, .25)
+        }
+
+        .btn-danger:hover {
+            transform: translateY(-1px)
+        }
+
+        .btn-success {
+            width: 100%;
+            padding: 13px;
+            background: linear-gradient(135deg, #059669, #10B981);
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            font-size: 15px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all .2s;
+            box-shadow: 0 4px 14px rgba(5, 150, 105, .25)
+        }
+
+        .btn-success:hover {
+            transform: translateY(-1px)
+        }
+
+        .btn-outline {
+            width: 100%;
+            padding: 11px;
+            background: var(--white);
+            color: var(--text2);
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius);
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all .2s;
+            margin-top: 8px
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary);
+            color: var(--primary)
+        }
+
+        /* METRICS */
+        .metrics {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 9px;
+            margin-bottom: 11px
+        }
+
+        .metric {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 13px;
+            box-shadow: var(--shadow-xs)
+        }
+
+        .metric-lbl {
+            font-size: 10px;
+            font-weight: 800;
+            color: var(--text3);
+            text-transform: uppercase;
+            letter-spacing: .07em
+        }
+
+        .metric-val {
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--text1);
+            margin-top: 3px;
+            letter-spacing: -.7px
+        }
+
+        .metric-sub {
+            font-size: 11px;
+            color: var(--text3);
+            margin-top: 2px
+        }
+
+        .metric-bar {
+            height: 3px;
+            border-radius: 2px;
+            margin-top: 8px
+        }
+
+        /* ABSENT */
+        .abs-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--bg2)
+        }
+
+        .abs-row:last-child {
+            border-bottom: none
+        }
+
+        .abs-name {
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--text1)
+        }
+
+        .abs-roll {
+            font-size: 11px;
+            color: var(--text3);
+            margin-top: 1px
+        }
+
+        /* STAFF LOG */
+        .log-entry {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--bg2)
+        }
+
+        .log-entry:last-child {
+            border-bottom: none
+        }
+
+        .log-ico {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 16px
+        }
+
+        .log-info {
+            flex: 1;
+            min-width: 0
+        }
+
+        .log-bus-n {
+            font-weight: 800;
+            font-size: 14px;
+            color: var(--text1)
+        }
+
+        .log-act {
+            font-size: 11px;
+            color: var(--text3);
+            margin-top: 1px
+        }
+
+        .log-t {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text2);
+            white-space: nowrap
+        }
+
+        /* COMPLAINT */
+        .comp-type-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 13px
+        }
+
+        .comp-type {
+            background: var(--bg);
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius);
+            padding: 11px;
+            cursor: pointer;
+            text-align: center;
+            transition: all .15s
+        }
+
+        .comp-type.sel {
+            border-color: var(--primary);
+            background: var(--primary-light)
+        }
+
+        .comp-type-ico {
+            font-size: 22px;
+            margin-bottom: 4px
+        }
+
+        .comp-type-lbl {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text2)
+        }
+
+        /* PROFILE */
+        .prof-hero {
+            background: linear-gradient(135deg, #EFF6FF, #DBEAFE, #E0E7FF);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            margin-bottom: 11px;
+            border: 1px solid #BFDBFE;
+            text-align: center
+        }
+
+        .prof-av {
+            width: 66px;
+            height: 66px;
+            border-radius: 18px;
+            background: linear-gradient(135deg, #1E40AF, #3B82F6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            font-weight: 900;
+            color: white;
+            margin: 0 auto 11px;
+            box-shadow: 0 4px 14px rgba(30, 64, 175, .3)
+        }
+
+        .prof-name {
+            font-size: 19px;
+            font-weight: 800;
+            color: var(--text1)
+        }
+
+        .prof-role {
+            font-size: 12px;
+            color: var(--text3);
+            margin-top: 3px
+        }
+
+        .prof-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 11px 0;
+            border-bottom: 1px solid var(--bg2)
+        }
+
+        .prof-row:last-child {
+            border-bottom: none
+        }
+
+        .prof-k {
+            font-size: 13px;
+            color: var(--text3);
+            font-weight: 500
+        }
+
+        .prof-v {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text1)
+        }
+
+        .btn-logout {
+            width: 100%;
+            padding: 11px;
+            background: var(--bg2);
+            color: var(--text2);
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius);
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all .2s;
+            margin-top: 4px
+        }
+
+        .btn-logout:hover {
+            background: #FEE2E2;
+            color: var(--red);
+            border-color: #FECACA
+        }
+
+        /* STARS */
+        .stars {
+            display: flex;
+            gap: 5px;
+            margin: 8px 0
+        }
+
+        .star {
+            font-size: 26px;
+            cursor: pointer;
+            opacity: .25;
+            transition: opacity .12s;
+            line-height: 1
+        }
+
+        .star.on {
+            opacity: 1
+        }
+
+        /* SOS */
+        .sos-btn {
+            width: 100%;
+            padding: 12px;
+            background: #FEF2F2;
+            color: var(--red);
+            border: 1.5px solid #FECACA;
+            border-radius: var(--radius);
+            font-size: 14px;
+            font-weight: 800;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            margin-bottom: 11px
+        }
+
+        .sos-btn:hover {
+            background: #FEE2E2
+        }
+
+        /* MODAL */
+        .modal-bg {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, .45);
+            z-index: 200;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px
+        }
+
+        .modal-bg.open {
+            display: flex
+        }
+
+        .modal {
+            background: var(--white);
+            border-radius: var(--radius-xl);
+            padding: 22px;
+            width: 100%;
+            max-width: 340px;
+            box-shadow: var(--shadow-md)
+        }
+
+        .modal-title {
+            font-size: 17px;
+            font-weight: 800;
+            color: var(--text1);
+            margin-bottom: 7px
+        }
+
+        .modal-body {
+            font-size: 13px;
+            color: var(--text3);
+            line-height: 1.6;
+            margin-bottom: 14px
+        }
+
+        .modal-btns {
+            display: flex;
+            gap: 8px
+        }
+
+        .modal-cancel {
+            flex: 1;
+            padding: 11px;
+            background: var(--bg2);
+            border: none;
+            border-radius: var(--radius);
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            color: var(--text2)
+        }
+
+        .modal-confirm {
+            flex: 1;
+            padding: 11px;
+            background: var(--red);
+            border: none;
+            border-radius: var(--radius);
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            color: white
+        }
+
+        /* TOAST */
+        .toast {
+            position: fixed;
+            bottom: 82px;
+            left: 50%;
+            transform: translateX(-50%) translateY(16px);
+            background: var(--text1);
+            color: white;
+            padding: 11px 18px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 600;
+            z-index: 999;
+            opacity: 0;
+            transition: all .28s;
+            pointer-events: none;
+            white-space: nowrap;
+            box-shadow: var(--shadow-md);
+            max-width: 90vw
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0)
+        }
+
+        /* MISC */
+        .pb80 {
+            height: 80px
+        }
+
+        .empty {
+            text-align: center;
+            padding: 22px;
+            color: var(--text4);
+            font-size: 13px
+        }
+
+        .sec-lbl {
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--text3);
+            text-transform: uppercase;
+            letter-spacing: .07em;
+            margin: 14px 0 8px
+        }
+
+        @media(max-width:380px) {
+            .hero-bus-num {
+                font-size: 26px
+            }
+
+            .hero-eta {
+                font-size: 24px
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =================== LOGIN =================== -->
+    <div id="login-screen">
+        <div class="login-wrap">
+            <div class="login-header">
+                <div class="login-logo-ring">
+                    <svg width="38" height="38" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2.2">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M8 17h8M3 9h18M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2zM7 13h.01M17 13h.01" />
+                    </svg>
+                </div>
+                <div class="login-title">CIT Bus Tracker</div>
+                <div class="login-college-name">Chennai Institute of Technology</div>
+                <div class="login-college-loc">📍 Kundrathur, Chennai — 600 069</div>
+                <div class="cit-badge">🎓 Day Scholar Transport Portal</div>
+            </div>
+            <div class="login-card">
+                <div class="role-tabs">
+                    <button class="role-tab active" onclick="setRole('student')">🎒 Student</button>
+                    <button class="role-tab" onclick="setRole('staff')">🔑 Staff / Admin</button>
+                </div>
+                <div id="stud-fields">
+                    <div class="fg"><label>Full Name</label><input id="inp-name" value="Priya Sharma"
+                            placeholder="Your full name"></div>
+                    <div class="fg"><label>Roll Number</label><input id="inp-roll" value="CIT2021CS042"
+                            placeholder="e.g. CIT2021CS042"></div>
+                    <div class="fg"><label>Your Bus Number</label>
+                        <select id="inp-bus">
+                            <option value="1">Bus 1 — Tambaram</option>
+                            <option value="2">Bus 2 — Kilambakkam Bus Stand</option>
+                            <option value="3">Bus 3 — Chrompet</option>
+                            <option value="4">Bus 4 — Perungalathur</option>
+                            <option value="5">Bus 5 — Vandalur</option>
+                            <option value="6">Bus 6 — Pallavaram</option>
+                            <option value="7">Bus 7 — Medavakkam</option>
+                            <option value="8">Bus 8 — Velachery</option>
+                            <option value="9">Bus 9 — Porur</option>
+                            <option value="10">Bus 10 — Ambattur</option>
+                            <option value="11">Bus 11 — Avadi</option>
+                            <option value="12">Bus 12 — Poonamallee</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="staff-fields" style="display:none">
+                    <div class="fg"><label>Staff Name</label><input id="inp-staffname" value="Mr. Rajan"
+                            placeholder="Your name"></div>
+                    <div class="fg"><label>Staff ID</label><input id="inp-staffid" value="CIT-STF-101"
+                            placeholder="e.g. CIT-STF-101"></div>
+                    <div class="fg"><label>Role</label>
+                        <select>
+                            <option>Transport Office</option>
+                            <option>Gate Security</option>
+                            <option>Admin</option>
+                        </select>
+                    </div>
+                </div>
+                <button class="btn-login" onclick="doLogin()">Enter Portal →</button>
+                <p class="login-hint">Demo — tap to explore all features</p>
+            </div>
+            <div class="feat-grid">
+                <div class="feat-item"><span>🚌</span>Live ETA</div>
+                <div class="feat-item"><span>✋</span>Mark Absent</div>
+                <div class="feat-item"><span>📍</span>Track Bus</div>
+                <div class="feat-item"><span>📣</span>Complaints</div>
+                <div class="feat-item"><span>🔔</span>Notices</div>
+                <div class="feat-item"><span>🆘</span>SOS Help</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- =================== APP =================== -->
+    <div id="app-screen">
+        <nav class="topnav">
+            <div class="nav-brand">
+                <div class="nav-icon">
+                    <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2.2">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M8 17h8M3 9h18M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2zM7 13h.01M17 13h.01" />
+                    </svg>
+                </div>
+                <div>
+                    <div class="nav-title">CIT Bus Tracker</div>
+                    <div class="nav-sub">Chennai Institute of Technology, Kundrathur</div>
+                </div>
+            </div>
+            <div class="nav-right">
+                <span class="nav-clock" id="nav-clock">8:00 AM</span>
+                <button class="nav-btn" onclick="showPage('notices')">
+                    <svg width="17" height="17" fill="none" stroke="#64748B" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                    </svg>
+                    <span class="nav-notif-dot"></span>
+                </button>
+                <div class="nav-avatar" id="nav-av" onclick="showPage('profile')">PS</div>
+            </div>
+        </nav>
+
+        <!-- ===== HOME ===== -->
+        <div id="page-home" class="page active">
+            <div class="container">
+                <div style="margin:4px 0 11px">
+                    <div style="font-size:18px;font-weight:800;color:var(--text1)" id="greeting">Good morning, Priya 👋
+                    </div>
+                    <div style="font-size:12px;color:var(--text3);margin-top:2px" id="today-date"></div>
+                </div>
+
+                <div id="abs-banner" style="display:none" class="notice notice-red">
+                    <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+                        style="flex-shrink:0;margin-top:1px">
+                        <circle cx="12" cy="12" r="10" />
+                        <path stroke-linecap="round" d="M12 8v4m0 4h.01" />
+                    </svg>
+                    <div style="flex:1"><b>Absent today</b> — Driver notified. Bus will not wait for you.</div>
+                    <button onclick="cancelAbsent()"
+                        style="background:none;border:1px solid #FECACA;border-radius:6px;padding:3px 9px;font-size:11px;color:#991B1B;cursor:pointer;white-space:nowrap;font-weight:700">Cancel</button>
+                </div>
+
+                <div class="weather-bar">
+                    <span style="font-size:18px">☀️</span>
+                    <span><b>Chennai, Kundrathur — 34°C</b> &nbsp;·&nbsp; Stay hydrated! Carry water on the bus.</span>
+                </div>
+
+                <!-- HERO -->
+                <div class="hero">
+                    <div class="hero-top">
+                        <div>
+                            <div
+                                style="font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.06em">
+                                Your Bus</div>
+                            <div class="hero-bus-num" id="h-busnum">Bus 1</div>
+                            <div class="hero-bus-label" id="h-route">Tambaram → CIT Kundrathur</div>
+                        </div>
+                        <div class="hero-eta-wrap">
+                            <div class="hero-eta" id="h-eta">18 min</div>
+                            <div class="hero-eta-lbl">ETA to college</div>
+                            <div style="margin-top:5px" id="h-badge"><span class="badge b-amber"><span
+                                        class="dot dot-a"></span>On the way</span></div>
+                        </div>
+                    </div>
+                    <div class="hero-prog">
+                        <div class="prog-row"><span>🏠 Start</span><span id="h-pct">62% complete</span><span>🏫
+                                CIT</span></div>
+                        <div class="prog-track">
+                            <div class="prog-bar" id="h-bar" style="width:62%">
+                                <div class="prog-bus-icon">🚌</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hero-stats">
+                        <div class="hs">
+                            <div class="hs-val" id="hs-pickup">6:30 AM</div>
+                            <div class="hs-lbl">Pickup</div>
+                        </div>
+                        <div class="hs">
+                            <div class="hs-val" id="hs-arrive">8:10 AM</div>
+                            <div class="hs-lbl">Reach CIT</div>
+                        </div>
+                        <div class="hs">
+                            <div class="hs-val" id="hs-drop">5:30 PM</div>
+                            <div class="hs-lbl">Home drop</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="sec-lbl">Quick Actions</div>
+                <div class="qa-grid">
+                    <div class="qa" onclick="showPage('absent')">
+                        <div class="qa-ico" style="background:#FEE2E2">✋</div>
+                        <div class="qa-title">Mark Absent</div>
+                        <div class="qa-desc">Notify driver you're skipping today</div>
+                    </div>
+                    <div class="qa" onclick="showPage('live')">
+                        <div class="qa-ico" style="background:#ECFDF5">📍</div>
+                        <div class="qa-title">Track Live</div>
+                        <div class="qa-desc">See your bus stop-by-stop</div>
+                    </div>
+                    <div class="qa" onclick="showPage('complaint')">
+                        <div class="qa-ico" style="background:#FFEDD5">📣</div>
+                        <div class="qa-title">Complaint</div>
+                        <div class="qa-desc">Report a bus or driver issue</div>
+                    </div>
+                    <div class="qa" onclick="showPage('notices')">
+                        <div class="qa-ico" style="background:#DBEAFE">🔔</div>
+                        <div class="qa-title">Notices</div>
+                        <div class="qa-desc">Alerts, delays &amp; announcements</div>
+                    </div>
+                </div>
+
+                <!-- All buses today -->
+                <div class="card">
+                    <div class="card-hd"><span class="card-title">All Buses Today</span><span class="badge b-blue">12
+                            routes</span></div>
+                    <div id="all-buses"></div>
+                </div>
+
+                <!-- Evening return -->
+                <div class="card">
+                    <div class="card-hd"><span class="card-title">Evening Return</span></div>
+                    <div style="display:flex;justify-content:space-between;align-items:center">
+                        <div>
+                            <div style="font-size:20px;font-weight:900;color:var(--primary)">4:30 PM</div>
+                            <div style="font-size:11px;color:var(--text3);margin-top:2px">Departs CIT Main Gate</div>
+                        </div>
+                        <div style="font-size:22px;color:var(--text3)">→</div>
+                        <div style="text-align:right">
+                            <div style="font-size:20px;font-weight:900;color:var(--text1)" id="eve-time">5:30 PM</div>
+                            <div style="font-size:11px;color:var(--text3);margin-top:2px" id="eve-loc">Reach Tambaram
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        style="margin-top:10px;padding-top:10px;border-top:1px solid var(--bg2);display:flex;justify-content:space-between;font-size:12px;color:var(--text3)">
+                        <span id="eve-students">22 students on evening bus</span>
+                        <span id="eve-absent" style="color:var(--red);font-weight:700">3 absent today</span>
+                    </div>
+                </div>
+                <div class="pb80"></div>
+            </div>
+        </div>
+
+        <!-- ===== LIVE TRACK ===== -->
+        <div id="page-live" class="page">
+            <div class="page-hd">
+                <div class="page-title">Live Tracking</div>
+                <div class="page-sub">Real-time bus positions — CIT Kundrathur routes</div>
+            </div>
+            <div class="container">
+                <div class="metrics">
+                    <div class="metric">
+                        <div class="metric-lbl">On the road</div>
+                        <div class="metric-val">9</div>
+                        <div class="metric-sub">of 12 buses</div>
+                        <div class="metric-bar" style="background:var(--green);width:75%"></div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-lbl">Students aboard</div>
+                        <div class="metric-val">341</div>
+                        <div class="metric-sub">19 marked absent</div>
+                        <div class="metric-bar" style="background:var(--primary);width:95%"></div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-hd"><span class="card-title">Select Bus to Track</span></div>
+                    <select id="trk-sel" onchange="renderTrack()"
+                        style="width:100%;padding:11px 13px;border:1.5px solid var(--border);border-radius:var(--radius);font-size:14px;background:var(--bg);color:var(--text1);outline:none">
+                        <option value="1">Bus 1 — Tambaram</option>
+                        <option value="2">Bus 2 — Kilambakkam</option>
+                        <option value="3">Bus 3 — Chrompet</option>
+                        <option value="4">Bus 4 — Perungalathur</option>
+                        <option value="5">Bus 5 — Vandalur</option>
+                        <option value="6">Bus 6 — Pallavaram</option>
+                        <option value="7">Bus 7 — Medavakkam</option>
+                        <option value="8">Bus 8 — Velachery</option>
+                        <option value="9">Bus 9 — Porur</option>
+                        <option value="10">Bus 10 — Ambattur</option>
+                        <option value="11">Bus 11 — Avadi</option>
+                        <option value="12">Bus 12 — Poonamallee</option>
+                    </select>
+                </div>
+                <div class="card">
+                    <div class="card-hd">
+                        <div style="display:flex;align-items:center;gap:8px">
+                            <span style="font-size:17px;font-weight:900" id="trk-title">Bus 1</span>
+                            <span id="trk-badge" class="badge b-amber">In transit</span>
+                        </div>
+                        <div class="live-pill">
+                            <div class="l-ring"></div>Live
+                        </div>
+                    </div>
+                    <div
+                        style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:13px;padding-bottom:13px;border-bottom:1px solid var(--bg2)">
+                        <div>
+                            <div
+                                style="font-size:10px;font-weight:800;color:var(--text3);text-transform:uppercase;letter-spacing:.05em">
+                                Driver</div>
+                            <div style="font-weight:800;font-size:13px;margin-top:3px" id="trk-driver">Murugan S.</div>
+                        </div>
+                        <div>
+                            <div
+                                style="font-size:10px;font-weight:800;color:var(--text3);text-transform:uppercase;letter-spacing:.05em">
+                                Students</div>
+                            <div style="font-weight:800;font-size:13px;margin-top:3px" id="trk-count">28/32</div>
+                        </div>
+                        <div style="text-align:right">
+                            <div
+                                style="font-size:10px;font-weight:800;color:var(--text3);text-transform:uppercase;letter-spacing:.05em">
+                                ETA</div>
+                            <div style="font-weight:900;font-size:14px;color:var(--green);margin-top:3px" id="trk-eta">
+                                18 min</div>
+                        </div>
+                    </div>
+                    <div id="trk-tl"></div>
+                </div>
+                <div class="card">
+                    <div class="card-hd"><span class="card-title">All Buses Status</span></div>
+                    <div id="live-all"></div>
+                </div>
+                <div class="pb80"></div>
+            </div>
+        </div>
+
+        <!-- ===== ABSENT ===== -->
+        <div id="page-absent" class="page">
+            <div class="page-hd">
+                <div class="page-title">Mark Absent</div>
+                <div class="page-sub">Save your driver's time — takes 10 seconds</div>
+            </div>
+            <div class="container">
+                <div id="already-absent" style="display:none" class="card">
+                    <div style="text-align:center;padding:10px 0">
+                        <div style="font-size:42px;margin-bottom:8px">✅</div>
+                        <div style="font-size:17px;font-weight:800;color:var(--green)">Absence marked!</div>
+                        <div style="font-size:13px;color:var(--text3);margin-top:4px;line-height:1.5">Driver notified.
+                            Bus will not wait for you today.</div>
+                        <button class="btn-outline" onclick="cancelAbsent()">Cancel — I'm coming today</button>
+                    </div>
+                </div>
+                <div id="abs-form">
+                    <div class="notice notice-info">
+                        <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24" style="flex-shrink:0">
+                            <circle cx="12" cy="12" r="10" />
+                            <path stroke-linecap="round" d="M12 16v-4M12 8h.01" />
+                        </svg>
+                        <div>Mark absent <b>before 6 AM</b> so the driver can skip your stop. Saves fuel &amp; time for
+                            everyone.</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-hd"><span class="card-title">Absence Details</span></div>
+                        <div class="fs"><label>Your Name</label><input id="abs-name" value="Priya Sharma"></div>
+                        <div class="fs"><label>Roll Number</label><input id="abs-roll" value="CIT2021CS042"></div>
+                        <div class="fs"><label>Bus Number</label>
+                            <select id="abs-bus">
+                                <option value="1">Bus 1 — Tambaram</option>
+                                <option value="2">Bus 2 — Kilambakkam</option>
+                                <option value="3">Bus 3 — Chrompet</option>
+                                <option value="4">Bus 4 — Perungalathur</option>
+                                <option value="5">Bus 5 — Vandalur</option>
+                                <option value="6">Bus 6 — Pallavaram</option>
+                                <option value="7">Bus 7 — Medavakkam</option>
+                                <option value="8">Bus 8 — Velachery</option>
+                                <option value="9">Bus 9 — Porur</option>
+                                <option value="10">Bus 10 — Ambattur</option>
+                                <option value="11">Bus 11 — Avadi</option>
+                                <option value="12">Bus 12 — Poonamallee</option>
+                            </select>
+                        </div>
+                        <div class="f2col">
+                            <div class="fs"><label>Absent for</label>
+                                <select id="abs-trip">
+                                    <option>Full day</option>
+                                    <option>Morning only</option>
+                                    <option>Evening only</option>
+                                </select>
+                            </div>
+                            <div class="fs"><label>Reason</label><input id="abs-reason" placeholder="Optional"></div>
+                        </div>
+                        <button class="btn-danger" onclick="submitAbsent()">Mark Absent for Today</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-hd"><span class="card-title">Absent Today</span><span class="badge b-red"
+                            id="abs-badge">3 absent</span></div>
+                    <div id="abs-list"></div>
+                </div>
+                <div class="card">
+                    <div class="card-hd"><span class="card-title">Your Month Summary</span></div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;text-align:center">
+                        <div>
+                            <div style="font-size:24px;font-weight:900;color:var(--red)">2</div>
+                            <div style="font-size:11px;color:var(--text3);margin-top:2px;font-weight:600">Absent days
+                            </div>
+                        </div>
+                        <div>
+                            <div style="font-size:24px;font-weight:900;color:var(--green)">18</div>
+                            <div style="font-size:11px;color:var(--text3);margin-top:2px;font-weight:600">Present days
+                            </div>
+                        </div>
+                        <div>
+                            <div style="font-size:24px;font-weight:900;color:var(--primary)">90%</div>
+                            <div style="font-size:11px;color:var(--text3);margin-top:2px;font-weight:600">Attendance
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pb80"></div>
+            </div>
+        </div>
+
+        <!-- ===== COMPLAINT ===== -->
+        <div id="page-complaint" class="page">
+            <div class="page-hd">
+                <div class="page-title">📣 Complaint Box</div>
+                <div class="page-sub">Report issues — we respond within 24 hours</div>
+            </div>
+            <div class="container">
+                <div class="card">
+                    <div class="card-hd"><span class="card-title">Type of Issue</span></div>
+                    <div class="comp-type-grid" id="comp-types">
+                        <div class="comp-type sel" onclick="selectComp(this,'Bus Late / Delay')">
+                            <div class="comp-type-ico">⏰</div>
+                            <div class="comp-type-lbl">Bus Late</div>
+                        </div>
+                        <div class="comp-type" onclick="selectComp(this,'Rash Driving')">
+                            <div class="comp-type-ico">🚨</div>
+                            <div class="comp-type-lbl">Rash Driving</div>
+                        </div>
+                        <div class="comp-type" onclick="selectComp(this,'Bus Overcrowded')">
+                            <div class="comp-type-ico">👥</div>
+                            <div class="comp-type-lbl">Overcrowded</div>
+                        </div>
+                        <div class="comp-type" onclick="selectComp(this,'AC / Fan Not Working')">
+                            <div class="comp-type-ico">🌬️</div>
+                            <div class="comp-type-lbl">AC / Fan Issue</div>
+                        </div>
+                        <div class="comp-type" onclick="selectComp(this,'Driver Behaviour')">
+                            <div class="comp-type-ico">🚌</div>
+                            <div class="comp-type-lbl">Driver Issue</div>
+                        </div>
+                        <div class="comp-type" onclick="selectComp(this,'Other Issue')">
+                            <div class="comp-type-ico">📝</div>
+                            <div class="comp-type-lbl">Other</div>
+                        </div>
+                    </div>
+                    <div class="fs"><label>Bus Number</label>
+                        <select id="comp-bus">
+                            <option>Bus 1 — Tambaram</option>
+                            <option>Bus 2 — Kilambakkam</option>
+                            <option>Bus 3 — Chrompet</option>
+                            <option>Bus 4 — Perungalathur</option>
+                            <option>Bus 5 — Vandalur</option>
+                            <option>Bus 6 — Pallavaram</option>
+                            <option>Bus 7 — Medavakkam</option>
+                            <option>Bus 8 — Velachery</option>
+                            <option>Bus 9 — Porur</option>
+                            <option>Bus 10 — Ambattur</option>
+                            <option>Bus 11 — Avadi</option>
+                            <option>Bus 12 — Poonamallee</option>
+                        </select>
+                    </div>
+                    <div class="fs"><label>Describe the Issue</label><textarea id="comp-desc"
+                            placeholder="Tell us what happened in detail..."></textarea></div>
+                    <div class="fs"><label>Date / Time of Incident</label><input id="comp-date"
+                            placeholder="e.g. Today, 7:45 AM"></div>
+                    <button class="btn-primary" onclick="submitComplaint()">Submit Complaint</button>
+                </div>
+                <div class="card">
+                    <div class="card-hd"><span class="card-title">Your Recent Complaints</span></div>
+                    <div id="comp-list">
+                        <div class="log-entry">
+                            <div class="log-ico" style="background:#FFFBEB">⏰</div>
+                            <div class="log-info">
+                                <div class="log-bus-n">Bus Late — Bus 1</div>
+                                <div class="log-act">Bus arrived 20 min late on 20 June</div>
+                            </div><span class="badge b-amber">Pending</span>
+                        </div>
+                        <div class="log-entry">
+                            <div class="log-ico" style="background:#ECFDF5">✅</div>
+                            <div class="log-info">
+                                <div class="log-bus-n">Overcrowded — Bus 1</div>
+                                <div class="log-act">Resolved — extra seat added · 15 June</div>
+                            </div><span class="badge b-green">Resolved</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="pb80"></div>
+            </div>
+        </div>
+
+        <!-- ===== NOTICES ===== -->
+        <div id="page-notices" class="page">
+            <div class="page-hd">
+                <div class="page-title">Notices &amp; Alerts</div>
+                <div class="page-sub">Bus delays, route changes &amp; announcements</div>
+            </div>
+            <div class="container">
+                <div class="card">
+                    <div id="notices-list"></div>
+                </div>
+                <div class="pb80"></div>
+            </div>
+        </div>
+
+        <!-- ===== STAFF LOG ===== -->
+        <div id="page-staff" class="page">
+            <div class="page-hd">
+                <div class="page-title">Staff Log</div>
+                <div class="page-sub">Digital bus register — no paper needed</div>
+            </div>
+            <div class="container">
+                <div class="metrics">
+                    <div class="metric">
+                        <div class="metric-lbl">Entered today</div>
+                        <div class="metric-val" id="stat-in">2</div>
+                        <div class="metric-sub">buses arrived</div>
+                        <div class="metric-bar" style="background:var(--green);width:40%"></div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-lbl">Departed today</div>
+                        <div class="metric-val" id="stat-out">1</div>
+                        <div class="metric-sub">buses left</div>
+                        <div class="metric-bar" style="background:var(--amber);width:25%"></div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-hd"><span class="card-title">Log a Bus</span></div>
+                    <div class="fs"><label>Bus Number</label>
+                        <select id="log-bus">
+                            <option value="">— Select —</option>
+                            <option value="1">Bus 1 — Tambaram</option>
+                            <option value="2">Bus 2 — Kilambakkam</option>
+                            <option value="3">Bus 3 — Chrompet</option>
+                            <option value="4">Bus 4 — Perungalathur</option>
+                            <option value="5">Bus 5 — Vandalur</option>
+                            <option value="6">Bus 6 — Pallavaram</option>
+                            <option value="7">Bus 7 — Medavakkam</option>
+                            <option value="8">Bus 8 — Velachery</option>
+                            <option value="9">Bus 9 — Porur</option>
+                            <option value="10">Bus 10 — Ambattur</option>
+                            <option value="11">Bus 11 — Avadi</option>
+                            <option value="12">Bus 12 — Poonamallee</option>
+                        </select>
+                    </div>
+                    <div class="f2col">
+                        <div class="fs"><label>Action</label>
+                            <select id="log-action">
+                                <option value="entry">Entered college gate</option>
+                                <option value="exit">Left college gate</option>
+                                <option value="delay">Delayed</option>
+                                <option value="breakdown">Breakdown</option>
+                                <option value="cancel">Cancelled</option>
+                            </select>
+                        </div>
+                        <div class="fs"><label>Time (blank = now)</label><input id="log-time"
+                                placeholder="e.g. 8:10 AM"></div>
+                    </div>
+                    <div class="f2col">
+                        <div class="fs"><label>Headcount</label><input id="log-hc" type="number"
+                                placeholder="Students on bus" min="0"></div>
+                        <div class="fs"><label>Notes</label><input id="log-notes" placeholder="Optional remark"></div>
+                    </div>
+                    <button class="btn-success" onclick="submitLog()">Log Entry →</button>
+                </div>
+                <div class="card">
+                    <div class="card-hd"><span class="card-title">Today's Log</span><span class="badge b-green"
+                            id="log-badge">3 entries</span></div>
+                    <div id="log-list"></div>
+                </div>
+                <div class="card">
+                    <div class="card-hd"><span class="card-title">Route Progress</span><span
+                            class="badge b-gray">Morning</span></div>
+                    <div id="route-summary"></div>
+                </div>
+                <div class="pb80"></div>
+            </div>
+        </div>
+
+        <!-- ===== PROFILE ===== -->
+        <div id="page-profile" class="page">
+            <div class="page-hd">
+                <div class="page-title">My Profile</div>
+            </div>
+            <div class="container">
+                <div class="prof-hero">
+                    <div class="prof-av" id="prof-av">PS</div>
+                    <div class="prof-name" id="prof-name">Priya Sharma</div>
+                    <div class="prof-role" id="prof-role">Day Scholar · Bus 1 · Tambaram</div>
+                    <div style="margin-top:9px"><span class="badge b-blue">Active Student</span></div>
+                </div>
+                <div class="card">
+                    <div class="prof-row"><span class="prof-k">Roll Number</span><span class="prof-v"
+                            id="pf-roll">CIT2021CS042</span></div>
+                    <div class="prof-row"><span class="prof-k">Bus Number</span><span class="prof-v" id="pf-bus">Bus 1 —
+                            Tambaram</span></div>
+                    <div class="prof-row"><span class="prof-k">Pickup Stop</span><span class="prof-v"
+                            id="pf-stop">Tambaram Bus Stand</span></div>
+                    <div class="prof-row"><span class="prof-k">Morning Pickup</span><span class="prof-v"
+                            id="pf-pickup">6:30 AM</span></div>
+                    <div class="prof-row"><span class="prof-k">Evening Drop</span><span class="prof-v" id="pf-drop">5:30
+                            PM</span></div>
+                    <div class="prof-row"><span class="prof-k">Driver Name</span><span class="prof-v"
+                            id="pf-driver">Murugan S.</span></div>
+                    <div class="prof-row"><span class="prof-k">Absent this month</span><span class="prof-v"
+                            id="pf-absent">2 days</span></div>
+                </div>
+                <div class="card">
+                    <div class="card-hd"><span class="card-title">Rate Today's Ride</span></div>
+                    <div style="font-size:13px;color:var(--text3);margin-bottom:4px">How was your bus experience today?
+                    </div>
+                    <div class="stars" id="stars">
+                        <span class="star" onclick="rateStar(1)">⭐</span><span class="star"
+                            onclick="rateStar(2)">⭐</span>
+                        <span class="star" onclick="rateStar(3)">⭐</span><span class="star"
+                            onclick="rateStar(4)">⭐</span>
+                        <span class="star" onclick="rateStar(5)">⭐</span>
+                    </div>
+                    <div class="fs" style="margin-top:8px"><label>Comment</label><textarea id="feedback"
+                            placeholder="Driver on time? Bus clean? Any issue?"></textarea></div>
+                    <button class="btn-outline" style="margin-top:0" onclick="submitFeedback()">Submit Feedback</button>
+                </div>
+                <button class="sos-btn" onclick="openModal('sos')">🆘 &nbsp;Report Emergency / SOS</button>
+                <button class="btn-logout" onclick="doLogout()">Sign out</button>
+                <div class="pb80"></div>
+            </div>
+        </div>
+
+        <!-- Bottom Nav -->
+        <nav class="bnav">
+            <button class="bnav-item active" id="bn-home" onclick="showPage('home')">
+                <div class="bnav-active-bar"></div>
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0h6" />
+                </svg>
+                Home
+            </button>
+            <button class="bnav-item" id="bn-live" onclick="showPage('live')">
+                <div class="bnav-active-bar"></div>
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                Live
+            </button>
+            <button class="bnav-item" id="bn-absent" onclick="showPage('absent')">
+                <div class="bnav-active-bar"></div>
+                <span class="bnav-pip" id="abs-pip"></span>
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+                </svg>
+                Absent
+            </button>
+            <button class="bnav-item" id="bn-staff" onclick="showPage('staff')">
+                <div class="bnav-active-bar"></div>
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                </svg>
+                Staff Log
+            </button>
+            <button class="bnav-item" id="bn-profile" onclick="showPage('profile')">
+                <div class="bnav-active-bar"></div>
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+                Profile
+            </button>
+        </nav>
+    </div>
+
+    <!-- SOS Modal -->
+    <div class="modal-bg" id="modal-sos">
+        <div class="modal">
+            <div class="modal-title">🆘 Emergency / SOS</div>
+            <div class="modal-body">This immediately alerts the CIT Transport Office and the bus driver. Use only for
+                genuine emergencies.</div>
+            <div class="fs">
+                <select id="sos-type">
+                    <option>Bus breakdown</option>
+                    <option>Accident on road</option>
+                    <option>Student safety issue</option>
+                    <option>Driver not responding</option>
+                    <option>Bus not arrived 30+ min</option>
+                </select>
+            </div>
+            <div class="modal-btns">
+                <button class="modal-cancel" onclick="closeModal('sos')">Cancel</button>
+                <button class="modal-confirm" onclick="confirmSOS()">Alert Now 🆘</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // ============================================================
+        // DATA
+        // ============================================================
+        const BUSES = {
+            '1': { name: 'Tambaram', driver: 'Murugan S.', stops: ['Tambaram Bus Stand', 'Perungalathur Stn', 'Vandalur Junction', 'Mudichur Signal', 'CIT Main Gate'], progress: 62, eta: '18 min', status: 'transit', pickup: '6:30 AM', drop: '5:30 PM', total: 32, picked: 28, color: '#1E40AF', bg: '#DBEAFE' },
+            '2': { name: 'Kilambakkam Bus Stand', driver: 'Rajkumar P.', stops: ['Kilambakkam Bus Stand', 'Vandalur Police Qtrs', 'Thaiyur Junction', 'Kalavakkam', 'CIT Main Gate'], progress: 80, eta: '7 min', status: 'transit', pickup: '6:45 AM', drop: '5:45 PM', total: 28, picked: 26, color: '#059669', bg: '#D1FAE5' },
+            '3': { name: 'Chrompet', driver: 'Selvam K.', stops: ['Chrompet Junction', 'Pallavaram Signal', 'Tambaram East', 'Perungalathur', 'CIT Main Gate'], progress: 100, eta: 'Arrived', status: 'arrived', pickup: '6:20 AM', drop: '5:20 PM', total: 24, picked: 24, color: '#059669', bg: '#D1FAE5' },
+            '4': { name: 'Perungalathur', driver: 'Dinesh R.', stops: ['Perungalathur Station', 'Mudichur Junction', 'Padappai Village', 'Thaiyur', 'CIT Main Gate'], progress: 38, eta: '28 min', status: 'transit', pickup: '6:50 AM', drop: '5:50 PM', total: 20, picked: 12, color: '#D97706', bg: '#FEF3C7' },
+            '5': { name: 'Vandalur', driver: 'Anbu M.', stops: ['Vandalur Depot', 'Padappai Bus Stop', 'Kalavakkam Signal', 'Thaiyur Bypass', 'CIT Main Gate'], progress: 55, eta: '20 min', status: 'transit', pickup: '6:55 AM', drop: '5:55 PM', total: 22, picked: 18, color: '#7C3AED', bg: '#EDE9FE' },
+            '6': { name: 'Pallavaram', driver: 'Senthil V.', stops: ['Pallavaram Bus Stand', 'Chrompet Jn', 'Tambaram East', 'Perungalathur', 'CIT Main Gate'], progress: 8, eta: 'Delayed 20min', status: 'delayed', pickup: '6:25 AM', drop: '5:25 PM', total: 26, picked: 5, color: '#DC2626', bg: '#FEE2E2' },
+            '7': { name: 'Medavakkam', driver: 'Ganesan T.', stops: ['Medavakkam Jn', 'Kovilambakkam', 'Pallavaram', 'Chromepet', 'CIT Main Gate'], progress: 30, eta: '35 min', status: 'transit', pickup: '6:10 AM', drop: '5:10 PM', total: 30, picked: 20, color: '#0891B2', bg: '#CFFAFE' },
+            '8': { name: 'Velachery', driver: 'Karthik B.', stops: ['Velachery MRTS', 'Vijaya Nagar', 'Pallavaram Jn', 'Chrompet', 'CIT Main Gate'], progress: 18, eta: '40 min', status: 'transit', pickup: '6:00 AM', drop: '5:00 PM', total: 34, picked: 16, color: '#0891B2', bg: '#CFFAFE' },
+            '9': { name: 'Porur', driver: 'Suresh A.', stops: ['Porur Junction', 'Maduravoyal', 'Poonamallee', 'Kundrathur Jn', 'CIT Main Gate'], progress: 45, eta: '24 min', status: 'transit', pickup: '6:40 AM', drop: '5:40 PM', total: 25, picked: 18, color: '#EA580C', bg: '#FFEDD5' },
+            '10': { name: 'Ambattur', driver: 'Venkat R.', stops: ['Ambattur Industrial', 'Koyambedu', 'Poonamallee', 'Kundrathur Jn', 'CIT Main Gate'], progress: 22, eta: '38 min', status: 'transit', pickup: '6:15 AM', drop: '5:15 PM', total: 28, picked: 14, color: '#EA580C', bg: '#FFEDD5' },
+            '11': { name: 'Avadi', driver: 'Ramesh N.', stops: ['Avadi Bus Depot', 'Ambattur OT', 'Koyambedu', 'Poonamallee', 'CIT Main Gate'], progress: 12, eta: '48 min', status: 'transit', pickup: '5:55 AM', drop: '5:00 PM', total: 22, picked: 10, color: '#7C3AED', bg: '#EDE9FE' },
+            '12': { name: 'Poonamallee', driver: 'Karthi S.', stops: ['Poonamallee Bus Stand', 'Kundrathur Old Town', 'Kundrathur Jn', 'Somangalam Rd', 'CIT Main Gate'], progress: 70, eta: '12 min', status: 'transit', pickup: '7:00 AM', drop: '6:00 PM', total: 20, picked: 17, color: '#1E40AF', bg: '#DBEAFE' },
+        };
+
+        const NOTICES = [
+            { icon: '⚠️', bg: '#FEF3C7', title: 'Bus 6 — Pallavaram delayed 20 min', body: 'Heavy traffic at Pallavaram junction. Driver informed. Expected arrival 8:50 AM.', time: '7:52 AM' },
+            { icon: '✅', bg: '#D1FAE5', title: 'Bus 3 — Chrompet arrived at CIT', body: 'Bus 3 entered CIT Main Gate. All 24 students dropped safely. Driver: Selvam K.', time: '7:55 AM' },
+            { icon: '📢', bg: '#DBEAFE', title: 'Exam week — Bus timing change', body: 'During exam week (July 1–10), evening buses depart at 1:30 PM instead of 4:30 PM.', time: '2 days ago' },
+            { icon: '🔧', bg: '#FFEDD5', title: 'Bus 6 — Alternate route today', body: 'Due to road work near Pallavaram, Bus 6 takes GST Road alternate route today only.', time: '6:00 AM' },
+            { icon: '🎉', bg: '#EDE9FE', title: 'New Bus 11 — Avadi route added', body: 'Bus 11 now serves Avadi, Ambattur OT, and Koyambedu. Register at CIT transport office.', time: 'Yesterday' },
+        ];
+
+        let absentList = [
+            { name: 'Karthik Raja', roll: 'CIT2021CS012', bus: '1', trip: 'Full day' },
+            { name: 'Divya Lakshmi', roll: 'CIT2021CS034', bus: '1', trip: 'Morning only' },
+            { name: 'Surya Kumar', roll: 'CIT2021CS008', bus: '2', trip: 'Full day' },
+        ];
+        let busLog = [
+            { bus: '3', action: 'entry', time: '7:55 AM', notes: 'On time', hc: '24' },
+            { bus: '2', action: 'entry', time: '8:06 AM', notes: '2 min early', hc: '26' },
+            { bus: '1', action: 'delay', time: '8:03 AM', notes: 'In transit — 18 min away', hc: '28' },
+        ];
+
+        // ============================================================
+        // STATE
+        // ============================================================
+        let user = { role: 'student', name: 'Priya Sharma', roll: 'CIT2021CS042', bus: '1' };
+        let loginRole = 'student', isAbsent = false, starRating = 0, selectedCompType = 'Bus Late / Delay';
+
+        // ============================================================
+        // LOGIN
+        // ============================================================
+        function setRole(r) {
+            loginRole = r;
+            document.querySelectorAll('.role-tab').forEach((t, i) => t.classList.toggle('active', i === (r === 'student' ? 0 : 1)));
+            document.getElementById('stud-fields').style.display = r === 'student' ? '' : 'none';
+            document.getElementById('staff-fields').style.display = r === 'staff' ? '' : 'none';
+        }
+        function doLogin() {
+            user.role = loginRole;
+            if (loginRole === 'student') {
+                user.name = document.getElementById('inp-name').value.trim() || 'Priya Sharma';
+                user.roll = document.getElementById('inp-roll').value.trim() || 'CIT2021CS042';
+                user.bus = document.getElementById('inp-bus').value;
+            } else {
+                user.name = document.getElementById('inp-staffname').value.trim() || 'Mr. Rajan';
+            }
+            document.getElementById('login-screen').style.display = 'none';
+            document.getElementById('app-screen').style.display = 'block';
+            initApp();
+            showPage(loginRole === 'staff' ? 'staff' : 'home');
+        }
+        function doLogout() {
+            document.getElementById('app-screen').style.display = 'none';
+            document.getElementById('login-screen').style.display = 'flex';
+        }
+
+        // ============================================================
+        // INIT
+        // ============================================================
+        function initApp() {
+            updateClock(); setInterval(updateClock, 30000);
+            setGreeting(); setDate();
+            updateHero(user.bus);
+            renderAllBuses(); renderAbsentList();
+            renderLogList(); renderRouteSummary();
+            renderTrack(); renderLiveAll();
+            renderNotices(); updateProfile();
+            setInterval(animateBuses, 1800);
+        }
+        function setGreeting() {
+            const h = new Date().getHours(), g = h < 12 ? 'morning' : h < 17 ? 'afternoon' : 'evening';
+            document.getElementById('greeting').textContent = 'Good ' + g + ', ' + user.name.split(' ')[0] + ' 👋';
+            const initials = user.name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+            const nav = document.getElementById('nav-av'); if (nav) nav.textContent = initials;
+        }
+        function setDate() {
+            const d = new Date(), days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+                ms = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+            const el = document.getElementById('today-date');
+            if (el) el.textContent = days[d.getDay()] + ', ' + d.getDate() + ' ' + ms[d.getMonth()] + ' ' + d.getFullYear();
+        }
+        function updateClock() {
+            const n = new Date(), h = n.getHours(), m = n.getMinutes(), ap = h >= 12 ? 'PM' : 'AM', hh = h % 12 || 12;
+            const el = document.getElementById('nav-clock');
+            if (el) el.textContent = hh + ':' + (m < 10 ? '0' : '') + m + ' ' + ap;
+        }
+
+        // ============================================================
+        // PAGES
+        // ============================================================
+        const PAGES = ['home', 'live', 'absent', 'complaint', 'notices', 'staff', 'profile'];
+        function showPage(p) {
+            PAGES.forEach(pg => {
+                const el = document.getElementById('page-' + pg); if (el) el.classList.remove('active');
+                const bn = document.getElementById('bn-' + pg); if (bn) bn.classList.remove('active');
+            });
+            const pel = document.getElementById('page-' + p); if (pel) pel.classList.add('active');
+            const bel = document.getElementById('bn-' + p); if (bel) bel.classList.add('active');
+            if (p === 'absent') renderAbsentPage();
+            if (p === 'staff') { renderLogList(); renderRouteSummary(); }
+            if (p === 'live') { renderTrack(); renderLiveAll(); }
+            if (p === 'notices') renderNotices();
+            if (p === 'profile') updateProfile();
+            window.scrollTo(0, 0);
+        }
+
+        // ============================================================
+        // HOME
+        // ============================================================
+        function updateHero(bid) {
+            const b = BUSES[bid]; if (!b) return;
+            const set = (id, v) => { const e = document.getElementById(id); if (e) e.textContent = v; };
+            set('h-busnum', 'Bus ' + bid);
+            set('h-route', b.name + ' → CIT Kundrathur');
+            set('h-eta', b.eta);
+            const bar = document.getElementById('h-bar'); if (bar) bar.style.width = b.progress + '%';
+            set('h-pct', Math.round(b.progress) + '% complete');
+            set('hs-pickup', b.pickup); set('hs-drop', b.drop);
+            set('eve-time', b.drop); set('eve-loc', 'Reach ' + b.name);
+            const badgeEl = document.getElementById('h-badge');
+            if (badgeEl) {
+                if (b.status === 'arrived') badgeEl.innerHTML = '<span class="badge b-green"><span class="dot dot-g"></span>Arrived!</span>';
+                else if (b.status === 'delayed') badgeEl.innerHTML = '<span class="badge b-red"><span class="dot dot-r"></span>Delayed</span>';
+                else badgeEl.innerHTML = '<span class="badge b-amber"><span class="dot dot-a"></span>On the way</span>';
+            }
+            const absCnt = absentList.filter(a => a.bus === bid).length;
+            set('eve-absent', absCnt + ' absent today');
+            set('eve-students', (b.total - absCnt) + ' students on evening bus');
+        }
+        function renderAllBuses() {
+            const el = document.getElementById('all-buses'); if (!el) return;
+            el.innerHTML = Object.entries(BUSES).map(([id, b]) => {
+                const mine = id === user.bus;
+                const bc = b.status === 'arrived' ? 'b-green' : b.status === 'delayed' ? 'b-red' : 'b-amber';
+                const lbl = b.status === 'arrived' ? '✅ Arrived' : b.status === 'delayed' ? '⚠ Delayed' : b.eta;
+                return `<div class="bus-row" ${mine ? 'style="background:var(--primary-light);border-radius:10px;padding:10px;margin:0 -2px"' : ''}>
+      <div class="bus-num-circle" style="background:${b.bg};color:${b.color};border-color:${b.color}33">${id}</div>
+      <div class="bus-info">
+        <div class="bus-name">${b.name}${mine ? ' <span style="background:var(--primary);color:white;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin-left:4px">MINE</span>' : ''}</div>
+        <div class="bus-sub">Driver: ${b.driver} &nbsp;·&nbsp; ${b.picked}/${b.total} students</div>
+      </div>
+      <div class="bus-right"><span class="badge ${bc}">${lbl}</span><div class="bus-seats">${Math.round(b.progress)}% done</div></div>
+    </div>`;
+            }).join('');
+        }
+        function animateBuses() {
+            Object.values(BUSES).forEach(b => { if (b.status === 'transit' && b.progress < 99) b.progress = Math.min(99, b.progress + 0.3); });
+            const b = BUSES[user.bus];
+            const etaMins = b.status === 'arrived' ? 0 : Math.max(0, Math.round(18 * (1 - (b.progress - 62) / 38)));
+            if (b.progress < 99) { b.eta = etaMins > 0 ? etaMins + ' min' : 'Arrived!'; } else { b.status = 'arrived'; b.eta = 'Arrived!'; }
+            const bar = document.getElementById('h-bar'); if (bar) bar.style.width = b.progress + '%';
+            const pct = document.getElementById('h-pct'); if (pct) pct.textContent = Math.round(b.progress) + '% complete';
+            const eta = document.getElementById('h-eta'); if (eta) eta.textContent = b.eta;
+            renderAllBuses();
+        }
+
+        // ============================================================
+        // LIVE TRACK
+        // ============================================================
+        function renderTrack() {
+            const id = document.getElementById('trk-sel')?.value || '1';
+            const b = BUSES[id];
+            const set = (eid, v) => { const e = document.getElementById(eid); if (e) e.textContent = v; };
+            set('trk-title', 'Bus ' + id); set('trk-driver', b.driver);
+            set('trk-count', b.picked + '/' + b.total);
+            set('trk-eta', b.status === 'arrived' ? 'Arrived!' : b.eta);
+            const badge = document.getElementById('trk-badge');
+            if (badge) {
+                if (b.status === 'arrived') { badge.className = 'badge b-green'; badge.textContent = 'Arrived'; }
+                else if (b.status === 'delayed') { badge.className = 'badge b-red'; badge.textContent = 'Delayed ⚠'; }
+                else { badge.className = 'badge b-amber'; badge.textContent = 'In transit'; }
+            }
+            const stepsDone = b.progress >= 100 ? b.stops.length : Math.floor(b.progress / 25);
+            const tl = document.getElementById('trk-tl'); if (!tl) return;
+            tl.innerHTML = b.stops.map((s, i) => {
+                const done = i < stepsDone || b.progress >= 100, curr = !done && i === stepsDone && b.progress < 100;
+                const dc = done ? 'done' : curr ? 'curr' : 'up';
+                const sc = done ? 'done' : (!curr ? 'up' : '');
+                const lc = done ? 'done' : '';
+                const note = done ? 'Picked up students' : (curr ? '🚌 Bus is here right now' : '');
+                return `<div class="tl-row">
+      <div class="tl-spine"><div class="tl-dot ${dc}"></div>${i < b.stops.length - 1 ? `<div class="tl-line ${lc}"></div>` : ''}</div>
+      <div class="tl-body">
+        <div class="tl-time">${addMins(b.pickup, i * 10)}</div>
+        <div class="tl-stop ${sc}">${s}${curr ? ' <span style="background:#ECFDF5;color:#065F46;border-radius:4px;padding:1px 7px;font-size:10px;font-weight:800">NOW</span>' : ''}</div>
+        ${note ? `<div class="tl-note">${note}</div>` : ''}
+      </div>
+    </div>`;
+            }).join('');
+        }
+        function addMins(t, m) {
+            const [hm, ap] = t.split(' '); const [h, mn] = hm.split(':');
+            let total = parseInt(h) % 12 * 60 + parseInt(mn) + (ap === 'PM' ? 720 : 0) + m;
+            const hh = Math.floor(total / 60) % 12 || 12, mm = total % 60, a = Math.floor(total / 60) >= 12 ? 'PM' : 'AM';
+            return hh + ':' + (mm < 10 ? '0' : '') + mm + ' ' + a;
+        }
+        function renderLiveAll() {
+            const el = document.getElementById('live-all'); if (!el) return;
+            el.innerHTML = Object.entries(BUSES).map(([id, b]) => {
+                const bc = b.status === 'arrived' ? 'b-green' : b.status === 'delayed' ? 'b-red' : 'b-amber';
+                const lbl = b.status === 'arrived' ? 'Arrived' : b.status === 'delayed' ? 'Delayed' : b.eta;
+                return `<div class="bus-row">
+      <div class="bus-num-circle" style="background:${b.bg};color:${b.color};border-color:${b.color}33">${id}</div>
+      <div class="bus-info"><div class="bus-name">${b.name}</div><div class="bus-sub">${b.picked}/${b.total} · ${b.driver}</div></div>
+      <span class="badge ${bc}">${lbl}</span>
+    </div>`;
+            }).join('');
+        }
+
+        // ============================================================
+        // ABSENT
+        // ============================================================
+        function renderAbsentPage() {
+            document.getElementById('already-absent').style.display = isAbsent ? 'block' : 'none';
+            document.getElementById('abs-form').style.display = isAbsent ? 'none' : 'block';
+            renderAbsentList();
+        }
+        function renderAbsentList() {
+            const myAbs = absentList.filter(a => a.bus === user.bus);
+            const el = document.getElementById('abs-list'); if (!el) return;
+            el.innerHTML = myAbs.length === 0 ? '<div class="empty">No absences for your bus today 🎉</div>' :
+                myAbs.map(a => `<div class="abs-row">
+      <div><div class="abs-name">${a.name}</div><div class="abs-roll">${a.roll} · ${a.trip}</div></div>
+      <span class="badge b-red">${a.trip === 'Full day' ? 'Full day' : 'Partial'}</span>
+    </div>`).join('');
+            const badge = document.getElementById('abs-badge'); if (badge) badge.textContent = myAbs.length + ' absent';
+            document.getElementById('abs-banner').style.display = isAbsent ? 'flex' : 'none';
+            const pip = document.getElementById('abs-pip'); if (pip) pip.style.display = isAbsent ? 'block' : 'none';
+            updateHero(user.bus);
+        }
+        function submitAbsent() {
+            const name = document.getElementById('abs-name').value.trim(), roll = document.getElementById('abs-roll').value.trim();
+            if (!name || !roll) { showToast('⚠ Fill in your name and roll number'); return; }
+            absentList.push({ name, roll, bus: document.getElementById('abs-bus').value, trip: document.getElementById('abs-trip').value });
+            isAbsent = true; renderAbsentPage(); showToast('✅ Absent marked — Driver notified!');
+        }
+        function cancelAbsent() {
+            isAbsent = false; absentList = absentList.filter(a => a.roll !== user.roll);
+            renderAbsentPage(); showToast('👍 Absence cancelled — See you today!');
+        }
+
+        // ============================================================
+        // COMPLAINT
+        // ============================================================
+        function selectComp(el, type) {
+            document.querySelectorAll('.comp-type').forEach(c => c.classList.remove('sel'));
+            el.classList.add('sel'); selectedCompType = type;
+        }
+        function submitComplaint() {
+            const desc = document.getElementById('comp-desc').value.trim();
+            if (!desc) { showToast('⚠ Please describe the issue'); return; }
+            const list = document.getElementById('comp-list');
+            const entry = document.createElement('div'); entry.className = 'log-entry';
+            const busVal = document.getElementById('comp-bus').value;
+            entry.innerHTML = `<div class="log-ico" style="background:#FEF3C7">📋</div><div class="log-info"><div class="log-bus-n">${selectedCompType} — ${busVal.split(' ')[0]} ${busVal.split(' ')[1]}</div><div class="log-act">${desc.slice(0, 60)}${desc.length > 60 ? '...' : ''}</div></div><span class="badge b-blue">Submitted</span>`;
+            list.prepend(entry);
+            document.getElementById('comp-desc').value = '';
+            document.getElementById('comp-date').value = '';
+            showToast('📣 Complaint submitted! We respond within 24 hrs');
+        }
+
+        // ============================================================
+        // STAFF LOG
+        // ============================================================
+        function submitLog() {
+            const bus = document.getElementById('log-bus').value;
+            if (!bus) { showToast('⚠ Select a bus first'); return; }
+            const action = document.getElementById('log-action').value;
+            const time = document.getElementById('log-time').value.trim() || nowStr();
+            const hc = document.getElementById('log-hc').value;
+            const notes = document.getElementById('log-notes').value.trim();
+            busLog.unshift({ bus, action, time, hc, notes });
+            document.getElementById('log-bus').value = '';
+            document.getElementById('log-time').value = '';
+            document.getElementById('log-hc').value = '';
+            document.getElementById('log-notes').value = '';
+            renderLogList(); showToast('✅ Bus ' + bus + ' logged at ' + time);
+        }
+        function nowStr() { const n = new Date(), h = n.getHours(), m = n.getMinutes(); return (h % 12 || 12) + ':' + (m < 10 ? '0' : '') + m + (h < 12 ? ' AM' : ' PM'); }
+        function renderLogList() {
+            const el = document.getElementById('log-list'); if (!el) return;
+            const icMap = { entry: { bg: '#ECFDF5', ico: '✅' }, exit: { bg: '#FFFBEB', ico: '🚪' }, delay: { bg: '#FEF3C7', ico: '⏰' }, breakdown: { bg: '#FEE2E2', ico: '🔧' }, cancel: { bg: '#FEE2E2', ico: '❌' } };
+            const lblMap = { entry: 'Entered college gate', exit: 'Left college gate', delay: 'Delayed — traffic', breakdown: 'Breakdown reported', cancel: 'Trip cancelled' };
+            el.innerHTML = busLog.map(l => {
+                const ic = icMap[l.action] || icMap.entry;
+                return `<div class="log-entry">
+      <div class="log-ico" style="background:${ic.bg}">${ic.ico}</div>
+      <div class="log-info">
+        <div class="log-bus-n">Bus ${l.bus} — ${BUSES[l.bus] ? BUSES[l.bus].name : ''}</div>
+        <div class="log-act">${lblMap[l.action] || l.action}${l.hc ? ' · ' + l.hc + ' students' : ''}${l.notes ? ' · ' + l.notes : ''}</div>
+      </div>
+      <div class="log-t">${l.time}</div>
+    </div>`;
+            }).join('') || '<div class="empty">No entries yet — start logging!</div>';
+            const si = document.getElementById('stat-in'); if (si) si.textContent = busLog.filter(l => l.action === 'entry').length;
+            const so = document.getElementById('stat-out'); if (so) so.textContent = busLog.filter(l => l.action === 'exit').length;
+            const badge = document.getElementById('log-badge'); if (badge) badge.textContent = busLog.length + ' entries';
+        }
+        function renderRouteSummary() {
+            const el = document.getElementById('route-summary'); if (!el) return;
+            el.innerHTML = Object.entries(BUSES).map(([id, b]) => {
+                const col = b.status === 'arrived' ? 'var(--green)' : b.status === 'delayed' ? 'var(--red)' : 'var(--primary)';
+                return `<div style="padding:8px 0;border-bottom:1px solid var(--bg2)">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+        <div style="font-weight:800;font-size:13px;color:var(--text1)">Bus ${id} — ${b.name}</div>
+        <span style="font-size:11px;font-weight:700;color:${col}">${b.status === 'arrived' ? '✅ Arrived' : b.status === 'delayed' ? '⚠ Delayed' : b.eta + ' away'}</span>
+      </div>
+      <div style="height:4px;background:var(--bg2);border-radius:3px;overflow:hidden">
+        <div style="width:${b.progress}%;height:100%;background:${col};border-radius:3px;transition:width 1s"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text4);margin-top:3px;font-weight:600">
+        <span>${b.picked}/${b.total} students</span><span>${Math.round(b.progress)}%</span>
+      </div>
+    </div>`;
+            }).join('');
+        }
+
+        // ============================================================
+        // NOTICES
+        // ============================================================
+        function renderNotices() {
+            const el = document.getElementById('notices-list'); if (!el) return;
+            el.innerHTML = NOTICES.map(n => `<div class="log-entry">
+    <div class="log-ico" style="background:${n.bg}">${n.icon}</div>
+    <div class="log-info"><div class="log-bus-n">${n.title}</div><div class="log-act">${n.body}</div><div style="font-size:10px;color:var(--text4);margin-top:3px;font-weight:600">${n.time}</div></div>
+  </div>`).join('');
+        }
+
+        // ============================================================
+        // PROFILE
+        // ============================================================
+        function updateProfile() {
+            const b = BUSES[user.bus];
+            const initials = user.name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+            const set = (id, v) => { const e = document.getElementById(id); if (e) e.textContent = v; };
+            set('prof-av', initials); set('nav-av', initials);
+            set('prof-name', user.name); set('pf-roll', user.roll);
+            set('prof-role', 'Day Scholar · Bus ' + user.bus + (b ? ' · ' + b.name : ''));
+            set('pf-bus', 'Bus ' + user.bus + (b ? ' — ' + b.name : ''));
+            set('pf-stop', b ? b.stops[0] : '—');
+            set('pf-pickup', b ? b.pickup : '—');
+            set('pf-drop', b ? b.drop : '—');
+            set('pf-driver', b ? b.driver : '—');
+            set('pf-absent', absentList.filter(a => a.roll === user.roll).length + ' days');
+        }
+        function rateStar(n) { starRating = n; document.querySelectorAll('.star').forEach((s, i) => s.classList.toggle('on', i < n)); }
+        function submitFeedback() {
+            if (!starRating) { showToast('⭐ Please select a star rating'); return; }
+            showToast('🙏 Thank you for your feedback!');
+            starRating = 0; document.querySelectorAll('.star').forEach(s => s.classList.remove('on'));
+            document.getElementById('feedback').value = '';
+        }
+
+        // ============================================================
+        // MODAL / SOS
+        // ============================================================
+        function openModal(id) { document.getElementById('modal-' + id).classList.add('open'); }
+        function closeModal(id) { document.getElementById('modal-' + id).classList.remove('open'); }
+        function confirmSOS() { closeModal('sos'); showToast('🆘 Transport office alerted immediately!'); }
+
+        // ============================================================
+        // TOAST
+        // ============================================================
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.textContent = msg; t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 3200);
+        }
+    </script>
+</body>
+
+</html>
