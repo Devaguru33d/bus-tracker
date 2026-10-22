@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CIT Bus Tracker</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <section id="login-view" class="login">
+    <div class="login-box">
+      <h1>CIT Bus Tracker</h1>
+      <p class="sub">Chennai Institute of Technology</p>
+      <form id="login-form">
+        <label for="username">Username</label>
+        <input id="username" autocomplete="username" required>
+        <label for="password">Password</label>
+        <input id="password" type="password" autocomplete="current-password" required>
+        <p id="login-error" class="error" role="alert"></p>
+        <button type="submit">Log in</button>
+      </form>
+      <p class="hint">Demo: student1 / student123 &nbsp;|&nbsp; driver1 / driver123</p>
+    </div>
+  </section>
+
+  <section id="app-view" class="app" hidden>
+    <header>
+      <strong id="who"></strong>
+      <button id="logout" class="ghost">Log out</button>
+    </header>
+    <main>
+      <aside id="bus-list" aria-label="Buses"></aside>
+      <div id="map"></div>
+    </main>
+    <div id="driver-bar" class="driver-bar" hidden>
+      <span id="driver-status">GPS sharing is off</span>
+      <button id="gps-toggle">Start sharing location</button>
+    </div>
+  </section>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
